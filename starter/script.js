@@ -50,8 +50,19 @@ const header = document.querySelector('.header');
 // console.log(document.getElementsByClassName('btn'));live collection which means that it get updated atomatically
 
 ////////////////////////////CREATING ELEMENT /////////////////////////////////////
-const msg = document.createElement('div');
-msg.classList.add('cookie-message');
-msg.innerHTML =
-  'we used cookie for improved functionality and analytics, <button class="btn">got it</button';
-header.append(msg);
+const message = document.createElement('div');
+message.classList.add('cookie-message');
+
+message.innerHTML =
+  'we used cookie for improved functionality and analytics, <button class="btn btn--close-cookie">got it</button';
+header.prepend(message);
+// header.append(message);
+// header.prepend(message.cloneNode(true)); // clone element incase we want more than one copy
+// header.before(message); //inserting element before the header
+// header.after(message); // inserting element after the header
+document
+  .querySelector('.btn--close-cookie')
+  .addEventListener('click', function () {
+    message.remove();
+    // message.parentElement.removeChild(message);
+  });
