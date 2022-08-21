@@ -89,7 +89,37 @@ console.log(message.style.backgroundColor);
 // console.log(message.style.height);
 // console.log(getComputedStyle(message).height);
 
-message.style.height =
-  Number.parseFloat(getComputedStyle(message).height, 10) + 70 + 'px';
-
+// console.log((message.style.height = message.height + 70 + 'px'));
+Number.parseFloat(getComputedStyle(message).height, 10) + 70 + 'px';
 console.log(getComputedStyle(message).height);
+
+//reading an ATTRIBUTES from html using js
+const logo = document.querySelector('.nav__logo');
+console.log(logo);
+console.log(logo.src);
+console.log(logo.alt);
+console.log(logo.width);
+console.log(logo.height);
+console.log(logo.className);
+//change alt attribute
+logo.alt = 'Good img logo';
+
+//to get an attribute from element
+console.log(logo.getAttribute('src'));
+logo.setAttribute('company', 'bankist');
+console.log();
+
+const link = document.querySelector('.nav__link--btn');
+console.log(link.href);
+console.log(link.getAttribute('href'));
+
+//Data attribute are special kind of attribute that start with word data.
+console.log(logo.dataset.versionNumber);
+
+//CLASSES
+logo.classList.add('c');
+logo.classList.remove('c');
+logo.classList.toggle('c');
+logo.classList.contains('c');
+
+//do not se className to manipulate  because it will overwrite all the existing classes
