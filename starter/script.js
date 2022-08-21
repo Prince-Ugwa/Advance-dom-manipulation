@@ -35,19 +35,19 @@ document.addEventListener('keydown', function (e) {
 //   Selecting, Creating, and Deleting Elements
 
 //   Selecting elements
-// console.log(document.documentElement);
-// console.log(document.head);
-// console.log(document.body);
+console.log(document.documentElement); // select the the entire html docment element
+console.log(document.head);
+console.log(document.body);
 
 const header = document.querySelector('.header');
-// const allSections = document.querySelectorAll('.section');
-// console.log(allSections);
+const allSections = document.querySelectorAll('.section');
+console.log(allSections);
 
 // document.getElementById('section--1');
-// const allButtons = document.getElementsByTagName('button');// live collection which means that it get updated atomatically
+// const allButtons = document.getElementsByTagName('button');// return live collection which means that it get updated atomatically
 // console.log(allButtons);
 
-// console.log(document.getElementsByClassName('btn'));live collection which means that it get updated atomatically
+// console.log(document.getElementsByClassName('btn')); return live collection which means that it get updated atomatically
 
 ////////////////////////////CREATING ELEMENT /////////////////////////////////////
 const message = document.createElement('div');
@@ -60,9 +60,36 @@ header.prepend(message);
 // header.prepend(message.cloneNode(true)); // clone element incase we want more than one copy
 // header.before(message); //inserting element before the header
 // header.after(message); // inserting element after the header
+
+////////delete elements/////////////////////////
 document
   .querySelector('.btn--close-cookie')
   .addEventListener('click', function () {
     message.remove();
     // message.parentElement.removeChild(message);
   });
+
+const mds = document.createElement('h1');
+// const small = document.createElement('h3');
+mds.classList.add('mds');
+mds.innerHTML = 'wellcome testing <div class="btn btn-mds"> button</button';
+header.append(mds);
+console.log(mds);
+
+document.querySelector('.btn-mds').addEventListener('click', function () {
+  mds.remove();
+});
+
+///styles
+message.style.backgroundColor = '#333';
+message.style.color = 'red';
+message.style.width = '120%';
+
+console.log(message.style.backgroundColor);
+// console.log(message.style.height);
+// console.log(getComputedStyle(message).height);
+
+message.style.height =
+  Number.parseFloat(getComputedStyle(message).height, 10) + 70 + 'px';
+
+console.log(getComputedStyle(message).height);
