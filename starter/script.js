@@ -33,7 +33,7 @@ document.addEventListener('keydown', function (e) {
 
 ///////////////////////////////////////
 //   Selecting, Creating, and Deleting Elements
-
+/*
 //   Selecting elements
 console.log(document.documentElement); // select the the entire html docment element
 console.log(document.head);
@@ -123,3 +123,44 @@ logo.classList.toggle('c');
 logo.classList.contains('c');
 
 //do not se className to manipulate  because it will overwrite all the existing classes
+*/
+
+///Implementing smooth scrolling on the bankist app
+const btnScrollTo = document.querySelector('.btn--scroll-to');
+const section1 = document.querySelector('#section--1');
+
+btnScrollTo.addEventListener('click', function (e) {
+  //first cordinate of te btnscroll to
+  //to get this cordinate we can se the .getBoundingClientRect() method
+  //example
+
+  const s1Coords = section1.getBoundingClientRect();
+  console.log(s1Coords);
+  console.log(e.target.getBoundingClientRect()); //this will fetch the coordinates better
+
+  //getting the coord scroll
+  console.log(window.pageXOffset, pageYOffset);
+  console.log(
+    //these w
+    document.documentElement.clientHeight,
+    document.documentElement.clientWidth
+  );
+  // window.scrollTo({
+  //   left: s1Coords.left + window.pageXOffset,
+  //   top: s1Coords.top + window.pageYOffset,
+  //   behavior: 'smooth',
+  // });
+  section1.scrollIntoView({ behavior: 'smooth' });
+});
+
+//////////////////////////////////////////////////////////////////////////////////
+//HANDLING CLICK AND TYPE OF EVENTS
+
+const h1 = document.querySelector('h1');
+
+// h1.addEventListener('mouseenter', () => {
+//   alert('You are implementing a mouseenter events: D');
+// });
+h1.addEventListener('mouseleave', () => {
+  alert('You have just implement  a mouseleave events: D');
+});
