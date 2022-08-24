@@ -31,6 +31,48 @@ document.addEventListener('keydown', function (e) {
   }
 });
 
+///////////////////////////////////////////////////
+///Implementing smooth scrolling on the bankist app
+const btnScrollTo = document.querySelector('.btn--scroll-to');
+const section1 = document.querySelector('#section--1');
+
+btnScrollTo.addEventListener('click', function (e) {
+  //first cordinate of te btnscroll to
+  //to get this cordinate we can se the .getBoundingClientRect() method
+  //example
+
+  // const s1Coords = section1.getBoundingClientRect();
+  // console.log(s1Coords);
+  // console.log(e.target.getBoundingClientRect()); //this will fetch the coordinates better
+
+  // //getting the coord scroll
+  // console.log(window.pageXOffset, pageYOffset);
+  // console.log(
+  //   //these w
+  //   document.documentElement.clientHeight,
+  //   document.documentElement.clientWidth
+  // );
+  // window.scrollTo({
+  //   left: s1Coords.left + window.pageXOffset,
+  //   top: s1Coords.top + window.pageYOffset,
+  //   behavior: 'smooth',
+  // });
+  section1.scrollIntoView({ behavior: 'smooth' });
+});
+
+/////////////////////////////////////////////
+//PAGE NAVIGATION
+const navLink = document.querySelectorAll('.nav__link');
+navLink.forEach(function (el) {
+  el.addEventListener('click', function (e) {
+    e.preventDefault();
+    const id = this.getAttribute('href');
+    const scroll = document.querySelector(id);
+    scroll.scrollIntoView({ behavior: 'smooth' });
+  });
+});
+//////////////////////////////////////////////
+//LECTURE PARTS
 ///////////////////////////////////////
 //   Selecting, Creating, and Deleting Elements
 /*
@@ -122,8 +164,8 @@ logo.classList.remove('c');
 logo.classList.toggle('c');
 logo.classList.contains('c');
 
-//do not se className to manipulate  because it will overwrite all the existing classes
-*/
+//do not use className to manipulate  because it will overwrite all the existing classes
+
 
 ///Implementing smooth scrolling on the bankist app
 const btnScrollTo = document.querySelector('.btn--scroll-to');
@@ -161,6 +203,51 @@ const h1 = document.querySelector('h1');
 // h1.addEventListener('mouseenter', () => {
 //   alert('You are implementing a mouseenter events: D');
 // });
-h1.addEventListener('mouseleave', () => {
-  alert('You have just implement  a mouseleave events: D');
+// h1.addEventListener('mouseleave', () => {
+//   alert('You have just implement  a mouseleave events: D');
+// });
+
+const alertH1 = e => alert('You have just implement  a mouseleave events: D');
+h1.addEventListener('mouseleave', alertH1);
+
+//TO REMOVE AN EVENT
+
+setTimeout(() => h1.removeEventListener('mouseleave', alertH1), 3000);
+
+//////////////////////////////////////////////////////////////////////////
+//EVENT PROPAGATION IN PRACTICE
+
+const randomInt = function (min, max) {
+  return Math.floor(Math.random() * (max - min + 1) + min);
+};
+
+const randomColor = () =>
+  `rgb(${randomInt(0, 255)},${randomInt(0, 255)},${randomInt(0, 255)})`;
+
+console.log(randomColor(0, 255));
+document.querySelector('.nav__link').addEventListener('click', function (e) {
+  this.style.backgroundColor = randomColor();
+  //the this keyword point to the event handler on which the eventlistener is called
+  console.log('LINK', e.target, this);
+  //this target is get where the event is originated
+  //THE CURRENT TARGET IS ELEMENT ON WHICH THE EVENT HANDLER IS ATTACHED
+
+  //to stop propagation
+  // e.stopPropagation();
 });
+
+document.querySelector('.nav__links').addEventListener('click', function (e) {
+  this.style.backgroundColor = randomColor();
+  console.log('CONTAINER', e.target, this);
+});
+document.querySelector('.nav').addEventListener(
+  'click',
+  function (e) {
+    this.style.backgroundColor = randomColor();
+    console.log('NAV', e.target, this);
+  },
+  false
+
+  //  false is the third param that enable the capture phase
+);
+*/
