@@ -73,8 +73,8 @@ btnScrollTo.addEventListener('click', function (e) {
 //   });
 // });
 
-//in event delegation we add event to aparent of all the element that we interested in
-// add lister commn parent element
+//In event delegation we add event to a parent of all the element that we interested in
+// add lister common parent element
 //determine what element originated the event
 document.querySelector('.nav__links').addEventListener('click', function (e) {
   const id = e.preventDefault();
@@ -265,3 +265,22 @@ document.querySelector('.nav').addEventListener(
   //  false is the third param that enable the capture phase
 );
 */
+////////////////////////////////////////
+/////DOM TRAVERSING: basically means working through the Dom which means that
+//we can select an element base on another element.This so important
+//because sometimes we need to select an element relative to other element.
+// we can select elements downward or up ward and even side ways.
+const h1 = document.querySelector('h1');
+console.log(h1);
+
+//SELECTING ELEMENT DOWNWARDS:CHILD
+
+console.log(h1.querySelectorAll('.highlight'));
+console.log(h1.childNodes);
+console.log(h1.children);
+h1.firstElementChild.style.color = 'red';
+h1.lastElementChild.style.color = 'blue';
+
+//SELECTING ELEMENT UPWARDS: PARENT
+console.log(h1.parentNode);
+console.log(h1.parentElement);
