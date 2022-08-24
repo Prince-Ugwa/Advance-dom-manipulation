@@ -7,6 +7,8 @@ const modal = document.querySelector('.modal');
 const overlay = document.querySelector('.overlay');
 const btnCloseModal = document.querySelector('.btn--close-modal');
 const btnsOpenModal = document.querySelectorAll('.btn--show-modal');
+const btnScrollTo = document.querySelector('.btn--scroll-to');
+const section1 = document.querySelector('#section--1');
 
 const openModal = function (e) {
   e.preventDefault();
@@ -33,8 +35,6 @@ document.addEventListener('keydown', function (e) {
 
 ///////////////////////////////////////////////////
 ///Implementing smooth scrolling on the bankist app
-const btnScrollTo = document.querySelector('.btn--scroll-to');
-const section1 = document.querySelector('#section--1');
 
 btnScrollTo.addEventListener('click', function (e) {
   //first cordinate of te btnscroll to
@@ -61,15 +61,29 @@ btnScrollTo.addEventListener('click', function (e) {
 });
 
 /////////////////////////////////////////////
+///SMOOTH SCROLLING NAVIGATION
 //PAGE NAVIGATION
-const navLink = document.querySelectorAll('.nav__link');
-navLink.forEach(function (el) {
-  el.addEventListener('click', function (e) {
-    e.preventDefault();
-    const id = this.getAttribute('href');
-    const scroll = document.querySelector(id);
-    scroll.scrollIntoView({ behavior: 'smooth' });
-  });
+// const navLink = document.querySelectorAll('.nav__link');
+// navLink.forEach(function (el) {
+//   el.addEventListener('click', function (e) {
+//     e.preventDefault();
+//     const id = this.getAttribute('href');
+//     const scroll = document.querySelector(id);
+//     scroll.scrollIntoView({ behavior: 'smooth' });
+//   });
+// });
+
+//in event delegation we add event to aparent of all the element that we interested in
+// add lister commn parent element
+//determine what element originated the event
+document.querySelector('.nav__links').addEventListener('click', function (e) {
+  const id = e.preventDefault();
+
+  //Matching strategy
+  if (e.target.classList.contains('nav__link')) {
+    const id = e.target.getAttribute('href');
+    document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
+  }
 });
 //////////////////////////////////////////////
 //LECTURE PARTS
