@@ -1,15 +1,17 @@
 'use strict';
 
 ///////////////////////////////////////
-// Modal window
-
+///////////Modal window///////////////
 const modal = document.querySelector('.modal');
 const overlay = document.querySelector('.overlay');
 const btnCloseModal = document.querySelector('.btn--close-modal');
 const btnsOpenModal = document.querySelectorAll('.btn--show-modal');
+//////////////////////////////////////////////////////////////////////////////
+////////////////////hero link handle selection/////////////////////////////////////
 const btnScrollTo = document.querySelector('.btn--scroll-to');
 const section1 = document.querySelector('#section--1');
-
+//////////////////////////////////////////////////////////////////////
+///////////////OPEN MODAL/////////////////////////////
 const openModal = function (e) {
   e.preventDefault();
   modal.classList.remove('hidden');
@@ -34,7 +36,7 @@ document.addEventListener('keydown', function (e) {
 });
 
 ///////////////////////////////////////////////////
-///Implementing smooth scrolling on the bankist app
+///Implementing smooth scrolling on BTN SCROLL
 
 btnScrollTo.addEventListener('click', function (e) {
   //first cordinate of te btnscroll to
@@ -85,6 +87,33 @@ document.querySelector('.nav__links').addEventListener('click', function (e) {
     document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
   }
 });
+
+////////////////BUILDING THE TAB CONTENT///////////////////////
+const tab = document.querySelectorAll('.operations__tab');
+const tabContainer = document.querySelector('.operations__tab-container');
+const tabContent = document.querySelectorAll('.operations__content');
+tabContainer.addEventListener('click', function (e) {
+  const clicked = e.target.closest('.operations__tab');
+  console.log(clicked);
+
+  //Guard clause
+  if (!clicked) return;
+
+  //Remove Active tab
+  tab.forEach(t => t.classList.remove('operations__tab--active'));
+
+  tabContent.forEach(content =>
+    content.classList.remove('operations__content--active')
+  );
+  ///Activate active tab
+  clicked.classList.add('operations__tab--active');
+
+  //Activate content area
+  document
+    .querySelector(`.operations__content--${clicked.dataset.tab}`)
+    .classList.add('operations__content--active');
+});
+
 //////////////////////////////////////////////
 //LECTURE PARTS
 ///////////////////////////////////////
@@ -264,7 +293,7 @@ document.querySelector('.nav').addEventListener(
 
   //  false is the third param that enable the capture phase
 );
-*/
+
 ////////////////////////////////////////
 /////DOM TRAVERSING: basically means working through the Dom which means that
 //we can select an element base on another element.This so important
@@ -276,11 +305,26 @@ console.log(h1);
 //SELECTING ELEMENT DOWNWARDS:CHILD
 
 console.log(h1.querySelectorAll('.highlight'));
-console.log(h1.childNodes);
-console.log(h1.children);
-h1.firstElementChild.style.color = 'red';
-h1.lastElementChild.style.color = 'blue';
+console.log(h1.childNodes);// select all kind of nodes
+console.log(h1.children);// fetch only the direct children
+h1.firstElementChild.style.color = 'red';// fetch only the firstchild
+h1.lastElementChild.style.color = 'blue';//fetch only the last child
 
 //SELECTING ELEMENT UPWARDS: PARENT
-console.log(h1.parentNode);
-console.log(h1.parentElement);
+//  console.log(h1.parentNode);
+//  console.log(h1.parentElement);
+//
+//  closet received a query string like the query selector
+h1.closest('.header').style.background = 'var(--gradient-secondary)';
+
+//selecting siblingz
+console.log(h1.previousElementSibling);
+console.log(h1.nextElementSibling);
+console.log(h1.previousSibling);
+console.log(h1.nextSibling);
+
+console.log(h1.parentElement.children);
+[...h1.parentElement.children].forEach(function (el) {
+  if (el !== h1) el.style.transform = 'scale(0.5)';
+});
+*/

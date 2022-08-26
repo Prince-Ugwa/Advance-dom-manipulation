@@ -672,14 +672,3 @@ h4 {
   font-size: 1.5rem;
   font-weight: 400;
 }
-/* COOKIE MESSAGE */
-.mds {
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
-  width: 100%;
-  background-color: white;
-  color: #bbb;
-  font-size: 1.5rem;
-  font-weight: 400;
-}
