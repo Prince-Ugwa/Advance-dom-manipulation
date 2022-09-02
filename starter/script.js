@@ -11,6 +11,13 @@ const btnsOpenModal = document.querySelectorAll('.btn--show-modal');
 const btnScrollTo = document.querySelector('.btn--scroll-to');
 const section1 = document.querySelector('#section--1');
 //////////////////////////////////////////////////////////////////////
+/////////////////TAB COMPONENETS///////////////////
+const tab = document.querySelectorAll('.operations__tab');
+const tabContainer = document.querySelector('.operations__tab-container');
+const tabContent = document.querySelectorAll('.operations__content');
+/////////////////////////////////////////////////////////////////////
+
+const nav = document.querySelector('.nav');
 ///////////////OPEN MODAL/////////////////////////////
 const openModal = function (e) {
   e.preventDefault();
@@ -89,12 +96,9 @@ document.querySelector('.nav__links').addEventListener('click', function (e) {
 });
 
 ////////////////BUILDING THE TAB CONTENT///////////////////////
-const tab = document.querySelectorAll('.operations__tab');
-const tabContainer = document.querySelector('.operations__tab-container');
-const tabContent = document.querySelectorAll('.operations__content');
+
 tabContainer.addEventListener('click', function (e) {
   const clicked = e.target.closest('.operations__tab');
-  console.log(clicked);
 
   //Guard clause
   if (!clicked) return;
@@ -114,9 +118,125 @@ tabContainer.addEventListener('click', function (e) {
     .classList.add('operations__content--active');
 });
 
-//////////////////////////////////////////////
-//LECTURE PARTS
-///////////////////////////////////////
+///////////////////////////PASSING ARGUMENT TO EVENT HANDLER///////////////////////////////////
+const handleHover = function (e) {
+  if (e.target.classList.contains('nav__link')) {
+    const link = e.target;
+    const siblings = link.closest('.nav').querySelectorAll('.nav__link');
+    const logo = link.closest('.nav').querySelector('img');
+
+    siblings.forEach(el => {
+      if (el !== link) el.style.opacity = this;
+    });
+    logo.style.opacity = this;
+  }
+};
+// nav.addEventListener('mouseover', function (e) {
+//   handleHover(e, 0.5);
+// });
+// nav.addEventListener('mouseout', function (e) {
+//   handleHover(e, 1);
+// });
+
+//we can improve the code using the bind method istead of the soln above
+//the bind() method: which create a copy of a function thta is called on,
+//and it will set the this keyword in the function call to whatever value that we
+//pass into bind
+nav.addEventListener('mouseover', handleHover.bind(0.5));
+nav.addEventListener('mouseout', handleHover.bind(1));
+
+////////////////////////STICKY NAV//////////////////////////////////////
+// const getCoord = section1.getBoundingClientRect();
+// window.addEventListener('scroll', () => {
+//   if (window.scrollY > getCoord.top) nav.classList.add('sticky');
+//   else nav.classList.remove('sticky');
+// });
+
+/////////////////////////A BETTER WAY [INTERSECTION OBSERVER]///////////////////////
+// const obsCallBack = function (entries, observer) {
+//   entries.forEach(entry => {
+//     console.log(entry);
+//   });
+// };
+// const obsOptions = {
+//   //the root is the elements that the target is intersecting
+//   root: null,
+//   // threshold is the percentage of intersection at which the observer callback will be called
+//   threshold: [0, 0.2],
+// };
+// const observer = new IntersectionObserver(obsCallBack, obsOptions);
+// observer.observe(section1);
+
+const header = document.querySelector('.header'); //1
+const navHeight = nav.getBoundingClientRect().height; //5
+//4
+const stickyNav = function (entries) {
+  const [entry] = entries;
+
+  if (!entry.isIntersecting) nav.classList.add('sticky');
+  else nav.classList.remove('sticky');
+};
+//2
+const headerObserver = new IntersectionObserver(stickyNav, {
+  root: null,
+  threshold: 0,
+  //6
+  rootMargin: `-${navHeight}px`,
+});
+
+//3
+headerObserver.observe(header);
+////////////////////////////////////////////////////////////////////////////
+////////////////////////////REVEAL ELEMENT ON SCROLL///////////////////////////////////
+const allSections = document.querySelectorAll('.section');
+
+const revealSection = function (entries, observer) {
+  const [entry] = entries;
+  // console.log(entry);
+
+  //guard clause
+  if (!entry.isIntersecting) return;
+
+  entry.target.classList.remove('section--hidden');
+  observer.unobserve(entry.target);
+};
+
+const sectionObserver = new IntersectionObserver(revealSection, {
+  root: null,
+  threshold: 0.3,
+});
+
+allSections.forEach(function (section) {
+  sectionObserver.observe(section);
+  section.classList.add('section--hidden');
+});
+
+//////////////////////////////////////////////////////
+/////////////////////LAZY LOADING IMAGES/////////////////////
+const imgTarget = document.querySelectorAll('img[data-src]');
+const loadImg = function (entries, observer) {
+  const [entry] = entries;
+  console.log(entry);
+
+  if (!entry.isIntersecting) return;
+
+  //Replace the lazy img with the src image
+
+  entry.target.src = entry.target.dataset.src;
+
+  entry.target.addEventListener('load', function () {
+    entry.target.classList.remove('lazy-img');
+  });
+  observer.unobserve(entry.target);
+};
+const imgObserver = new IntersectionObserver(loadImg, {
+  root: null,
+  threshold: 0,
+  rootMargin: '200px',
+});
+imgTarget.forEach(img => imgObserver.observe(img));
+//////////////////LECTURE PARTS///////////////////
+//////////////////////////////////////////////////
 //   Selecting, Creating, and Deleting Elements
 /*
 //   Selecting elements
@@ -314,10 +434,13 @@ h1.lastElementChild.style.color = 'blue';//fetch only the last child
 //  console.log(h1.parentNode);
 //  console.log(h1.parentElement);
 //
-//  closet received a query string like the query selector
+//  closet received a query string like the query selector and selectorAll
 h1.closest('.header').style.background = 'var(--gradient-secondary)';
+//closest can trace a prent element far up no matter how far they are in the dom
+we can think of closet as the opposite of querySelector and querySelectorAll
 
-//selecting siblingz
+//sideways:selecting siblingz
+//in javascript e can only two siblings which are only the prevous and the next ones
 console.log(h1.previousElementSibling);
 console.log(h1.nextElementSibling);
 console.log(h1.previousSibling);
