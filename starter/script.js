@@ -187,7 +187,7 @@ const headerObserver = new IntersectionObserver(stickyNav, {
 //3
 headerObserver.observe(header);
 ////////////////////////////////////////////////////////////////////////////
-////////////////////////////REVEAL ELEMENT ON SCROLL///////////////////////////////////
+////////////////////////////REVEAL section ON SCROLL///////////////////////////////////
 const allSections = document.querySelectorAll('.section');
 
 const revealSection = function (entries, observer) {
@@ -208,7 +208,7 @@ const sectionObserver = new IntersectionObserver(revealSection, {
 
 allSections.forEach(function (section) {
   sectionObserver.observe(section);
-  section.classList.add('section--hidden');
+  // section.classList.add('section--hidden');
 });
 
 //////////////////////////////////////////////////////
@@ -235,6 +235,66 @@ const imgObserver = new IntersectionObserver(loadImg, {
   rootMargin: '200px',
 });
 imgTarget.forEach(img => imgObserver.observe(img));
+
+/////////////////////SLIDER COMPONENT///////////////////
+const slides = document.querySelectorAll('.slide');
+const slider = document.querySelector('.slider');
+const btnLeft = document.querySelector('.slider__btn--left');
+const btnRight = document.querySelector('.slider__btn--right');
+
+let curSlide = 0;
+const maxSlide = slides.length;
+
+// slider.style.transform = 'scale(0.4) translateX(-800px)';
+// slider.style.overflow = 'visible';
+// slides.forEach((s, i) => (s.style.transform = `translateX(${100 * i}%)`));
+//0%,100%,200%,300%
+
+//making slide go left
+// btnRight.addEventListener('click', function () {
+//   if (curSlide === maxSlide - 1) {
+//     curSlide = 0;
+//   } else {
+//     curSlide++;
+//   }
+//   // slides.forEach(function (s, i) {
+//   //   s.style.transform = `translateX(${100 * (i - curSlide)}%)`;
+//   // });
+// });
+//curslide=1: -100%,0%,100%,200%
+
+//////////////////////////////////
+///REFACTOR THE CODE: solution2
+const slidings = function (slide) {
+  slides.forEach(function (s, i) {
+    s.style.transform = `translateX(${100 * (i - slide)}%)`;
+  });
+};
+slidings(0);
+
+//NEXTSLIDE
+const nextSlide = function () {
+  if (curSlide === maxSlide - 1) {
+    curSlide = 0;
+  } else {
+    curSlide++;
+  }
+  slidings(curSlide);
+};
+
+//PRESLIDE
+const prevSlide = function () {
+  if (curSlide === 0) {
+    curSlide = maxSlide - 1;
+  } else {
+    curSlide--;
+  }
+  slidings(curSlide);
+};
+btnRight.addEventListener('click', nextSlide);
+btnLeft.addEventListener('click', prevSlide);
+
+//////////////////////////////////////////////////
 //////////////////LECTURE PARTS///////////////////
 //////////////////////////////////////////////////
 //   Selecting, Creating, and Deleting Elements
