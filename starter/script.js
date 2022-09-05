@@ -553,3 +553,21 @@ console.log(h1.parentElement.children);
   if (el !== h1) el.style.transform = 'scale(0.5)';
 });
 */
+
+//life clycle of DOM events
+
+///Domcontentloaded
+document.addEventListener('DOMContentLoaded', function (e) {
+  // console.log(e);
+});
+
+//load event
+window.addEventListener('load', function (e) {
+  console.log('page fully loaded', e);
+});
+
+// window.addEventListener('beforeunload', function (e) {
+//   e.preventDefault();
+//   e.returnValue = 'message';
+//   console.log(e);
+// });
